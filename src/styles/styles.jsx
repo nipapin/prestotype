@@ -17,5 +17,23 @@ const typeFieldBoxStyle = {
 };
 const cursorStyle = { width: "2px", height: "24px", background: "#003585", opacity: 1, animation: `blink ${1000 / 1.5}ms infinite` };
 const hiddenInputStyle = { position: "absolute", left: 0, width: "100%", height: 1, outline: 0, margin: 0, padding: 0, border: "none", zIndex: "-1", color: "transparent", background: "transparent" };
+const textStyle = {
+    whiteSpace: "pre",
+};
+const typeFieldMainBoxStyle = { display: "flex", justifyContent: "center", alignItems: "center", borderRadius: "8px", boxShadow: "0 0 10px #dfdfdf", minHeight: "60px" };
 
-export { logoStyle, toolbarStyle, appBoxStyle, toolbarButtonStyle, mainBoxStyle, legengBoxStyle, counterStyle, counterLegendStyle, typeFieldBoxStyle, cursorStyle, hiddenInputStyle };
+export {
+    logoStyle,
+    toolbarStyle,
+    appBoxStyle,
+    toolbarButtonStyle,
+    mainBoxStyle,
+    legengBoxStyle,
+    counterStyle,
+    counterLegendStyle,
+    typeFieldBoxStyle,
+    cursorStyle,
+    hiddenInputStyle,
+    textStyle,
+    typeFieldMainBoxStyle,
+};

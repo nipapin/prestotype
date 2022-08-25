@@ -4,8 +4,8 @@ import App from "./App";
 import "./styles/styles.css";
 
 const root = ReactDOM.createRoot(document.getElementById("prestotype"));
-root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-);
+root.render(<App />);
+
+//    <React.StrictMode>
+//<App />
+//</React.StrictMode>,

@@ -1,20 +1,23 @@
-import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
-import RefreshIcon from "@mui/icons-material/Refresh";
-import SettingsIcon from "@mui/icons-material/Settings";
-import { logoStyle, toolbarStyle, toolbarButtonStyle } from "../styles/styles";
-import uiLogo from "../assets/ui_logo.png";
 import { useContext } from "react";
+
+import { AppBar, Box, IconButton, Toolbar } from "@mui/material";
+
+import RefreshIcon from "@mui/icons-material/Refresh";
+import ListIcon from "@mui/icons-material/List";
+
+import { logoStyle, toolbarStyle, toolbarButtonStyle } from "../styles/styles";
+
+import uiLogo from "../assets/ui_logo.png";
+
 import { AppContext } from "../contexts/AppContext";
+
+import { BaseSettings } from "../functions/BaseSettings";
 
 export default function CustomAppBar() {
     const { state, setState } = useContext(AppContext);
-
     const refresh = () => {
-        setState({
-            ...setState,
-            isDone: false,
-            errorCounter: 0,
-        });
+        const updateTrigger = !state.updateTrigger;
+        setState({ ...BaseSettings, updateTrigger, showCursor: false });
     };
 
     const toggleHandle = () => {
@@ -32,7 +35,7 @@ export default function CustomAppBar() {
                         <RefreshIcon sx={toolbarButtonStyle} />
                     </IconButton>
                     <IconButton onClick={toggleHandle}>
-                        <SettingsIcon sx={toolbarButtonStyle} />
+                        <ListIcon sx={toolbarButtonStyle} />
                     </IconButton>
                 </Box>
             </Toolbar>
