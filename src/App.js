@@ -16,6 +16,9 @@ import SelectTask from "./components/SelectTask";
 import ErrorCount from "./components/ErrorCount";
 import TypeSpeed from "./components/TypeSpeed";
 import TypeField from "./components/TypeField";
+import Summury from "./components/Summury";
+
+import Login from "./components/Login";
 
 const theme = createTheme({
     palette: {
@@ -39,7 +42,7 @@ function App() {
                 .map((line) => line.split(".").map((sentence) => sentence.trim().toLowerCase()))
                 .reduce((prev, next) => [...prev, ...next], [])
                 .filter((sentence) => sentence.length);
-            const currentSentence = sentences[0];
+            const currentSentence = sentences.sort((a, b) => a.split(" ").length - b.split(" ").length)[0];
             setInitialState((prev) => {
                 return { ...prev, sentences, currentSentence };
             });
@@ -51,13 +54,17 @@ function App() {
             setTime(1);
             return;
         }
-        const timer = setInterval(() => setTime(time + 1), 1000);
-        return () => clearInterval(timer);
-    }, [time, initialState.isDone]);
+        if (initialState.isStart) {
+            const timer = setInterval(() => setTime(time + 1), 1000);
+            return () => clearInterval(timer);
+        }
+    }, [time, initialState.isDone, initialState.isStart]);
 
     return (
         <AppContext.Provider value={{ state: initialState, setState: (newValue) => setInitialState(newValue) }}>
             <ThemeProvider theme={theme}>
+                {initialState.isDone && <Summury />}
+                <Login />
                 <Box sx={appBoxStyle}>
                     <SwipeableDrawer anchor="right" open={initialState.isMenuOpen} onClose={() => toggleDrawer(false)} onOpen={() => toggleDrawer(true)}>
                         <SelectTask />

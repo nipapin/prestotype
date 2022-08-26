@@ -5,12 +5,13 @@ const BaseSettings = {
     sentences: [],
     currentSentence: "",
     typedText: "",
-    allTypedEntries: "",
     currentSentenceIndex: 0,
     isMenuOpen: false,
     updateTrigger: false,
     showCursor: false,
     roundTime: 1,
+    isLoginOpen: false,
+    isStart: false,
 };
 
 export { BaseSettings };

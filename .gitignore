@@ -10,8 +10,9 @@
 
 # production
 /build
-
+/functions/FirebaseApp.jsx
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local

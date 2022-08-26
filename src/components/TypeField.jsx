@@ -10,9 +10,9 @@ import Cursor from "./Cursor";
 
 export default function TypeField({ time }) {
     const { state, setState } = useContext(AppContext);
-    const [typedText, setTypedText] = useState(state.typedText);
     const [letterIndex, setLetterIndex] = useState(0);
     const [currentLetter, setCurrentLetter] = useState("");
+    const [className, setClassName] = useState("");
 
     const textInputRef = useRef(null);
 
@@ -23,9 +23,6 @@ export default function TypeField({ time }) {
         }
     };
     const inputHandle = (event) => {
-        const mutateEntries = state.allTypedEntries + event.nativeEvent.data;
-        setState({ ...state, allTypedEntries: mutateEntries });
-
         if (event.nativeEvent.data !== currentLetter) {
             const newState = { ...state };
             newState.errorCounter++;
@@ -34,11 +31,10 @@ export default function TypeField({ time }) {
         }
         setLetterIndex((prev) => prev + 1);
         setCurrentLetter(state.currentSentence.charAt(letterIndex + 1));
-        setTypedText((prev) => prev + currentLetter);
         const typingSpeed = Math.round((60 * state.typedText.length) / time);
-        const isDone = typedText.length === state.currentSentence.length - 1;
+        const isDone = state.typedText.length === state.currentSentence.length - 1;
         const mutateTypedText = state.typedText + currentLetter;
-        setState({ ...state, isDone, typedText: mutateTypedText, typingSpeed });
+        setState({ ...state, isDone, typedText: mutateTypedText, typingSpeed, isStart: true, time: time });
     };
 
     const handleClickAway = () => {
@@ -50,21 +46,26 @@ export default function TypeField({ time }) {
 
     useEffect(() => {
         setCurrentLetter(state.currentSentence.charAt(0));
-        setTypedText("");
         setLetterIndex(0);
     }, [state.currentSentence]);
 
-    return state.isDone ? null : (
+    useEffect(() => {
+        if (state.errorCounter === 0) return;
+        setClassName("error-flash");
+        setTimeout(() => setClassName(""), 300);
+    }, [state.errorCounter]);
+
+    return (
         <Box sx={typeFieldMainBoxStyle}>
             {state.currentSentence === "" ? (
                 <CircularProgress />
             ) : (
                 <ClickAwayListener onClickAway={handleClickAway}>
-                    <Box sx={typeFieldBoxStyle} onClick={clickHandle}>
+                    <Box sx={typeFieldBoxStyle} onClick={clickHandle} className={className}>
                         <input style={hiddenInputStyle} ref={textInputRef} onChange={inputHandle}></input>
-                        <div style={{ ...textStyle, opacity: 0.3 }}>{typedText}</div>
+                        <div style={{ ...textStyle, opacity: 0.3 }}>{state.typedText}</div>
                         {state.showCursor && <Cursor />}
-                        <div style={textStyle}>{state.currentSentence.slice(typedText.length, state.currentSentence.length)}</div>
+                        <div style={textStyle}>{state.currentSentence.slice(state.typedText.length, state.currentSentence.length)}</div>
                     </Box>
                 </ClickAwayListener>
             )}
