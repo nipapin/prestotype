@@ -12,6 +12,7 @@ const BaseSettings = {
     roundTime: 1,
     isLoginOpen: false,
     isStart: false,
+    appType: "trainer",
 };
 
 export { BaseSettings };

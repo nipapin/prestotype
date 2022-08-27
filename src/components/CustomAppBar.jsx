@@ -18,7 +18,7 @@ export default function CustomAppBar() {
     const { state, setState } = useContext(AppContext);
     const refresh = () => {
         const updateTrigger = !state.updateTrigger;
-        setState({ ...BaseSettings, updateTrigger, showCursor: false, isDone: false });
+        setState({ ...BaseSettings, updateTrigger, showCursor: false, isDone: false, appType: state.appType });
     };
 
     const toggleHandle = () => {

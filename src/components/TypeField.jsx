@@ -54,7 +54,6 @@ export default function TypeField({ time }) {
         setClassName("error-flash");
         setTimeout(() => setClassName(""), 300);
     }, [state.errorCounter]);
-
     return (
         <Box sx={typeFieldMainBoxStyle}>
             {state.currentSentence === "" ? (
